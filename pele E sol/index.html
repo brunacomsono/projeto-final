@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pele & Sol - Beachwear</title>
+
+    <!-- Ícones redes sociais -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* Fundo de praia */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+
+        /* Header animado */
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sol animado */
+        .sol {
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle, #ffdd55, #ff8c00);
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            animation: pulsar 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulsar {
+            0% {
+                transform: scale(1);
+                filter: brightness(1);
+            }
+
+            100% {
+                transform: scale(1.15);
+                filter: brightness(1.4);
+            }
+        }
+
+        /* Ondas animadas */
+        .ondas {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 0 0 50% 50%;
+            animation: moverOndas 8s linear infinite;
+        }
+
+        .ondas2 {
+            bottom: -10px;
+            animation-duration: 12s;
+            opacity: 0.4;
+        }
+
+        @keyframes moverOndas {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        header h1 {
+            margin: 10px 0 0;
+            font-size: 3rem;
+            text-shadow: 2px 2px 5px #000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+        }
+
+        nav a {
+            font-weight: bold;
+            color: #ffdd55;
+            text-decoration: none;
+        }
+
+        /* Botão carrinho */
+        #carrinho-btn {
+            background: #ffcc00;
+            color: black;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+
+        /* Container */
+        .section-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 25px;
+            margin: 20px;
+            border-radius: 12px;
+        }
+
+        /* Produtos */
+        .produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: #fff;
+            color: #000;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 8px #0005;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .btn-comprar {
+            padding: 10px;
+            width: 100%;
+            background: #ffcc00;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Redes sociais */
+        .social {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .social a {
+            color: white;
+            margin: 0 10px;
+            font-size: 2rem;
+        }
+
+        /* Carrinho */
+        #carrinho-box {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+        }
+
+        iframe {
+            width: 90%;
+            max-width: 600px;
+            height: 250px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="sol"></div>
+        <h1>Pele & Sol</h1>
+        <p>Biquínis com Shorts & Saias</p>
+
+        <div class="ondas"></div>
+        <div class="ondas ondas2"></div>
+    </header>
+
+    <nav>
+        <a href="#produtos">Produtos</a>
+        <a href="cadastro.html">Cadastro</a>
+        <a href="#contato">Contato</a>
+
+        <button id="carrinho-btn">Carrinho (0)</button>
+    </nav>
+
+    <!-- CARRINHO -->
+    <div class="section-container" id="carrinho-box">
+        <h2>Carrinho</h2>
+        <ul id="lista-carrinho"></ul>
+    </div>
+    <div class="produtos">
+
+        <script>
+            const produtos = [
+                { nome: "Biquíni roxo marmorizado", img: "imagens/biquini 1.webp" },
+                { nome: "Biquíni preto 1", img: "imagens/biquini 2.webp" },
+                { nome: "Biquíni preto 2", img: "imagens/biquini 3.webp" },
+                { nome: "Biquíni rosa tropical", img: "imagens/biquini 4.webp" },
+                { nome: "Biquíni algodao doce", img: "imagens/biquini 5.webp" },
+                { nome: "Biquíni preto saia longa", img: "imagens/biquini 6.webp" },
+                { nome: "Biquíni Verde Escuro", img: "imagens/biquini 7.webp" },
+                { nome: "Biquíni Azul Água", img: "imagens/biquini 8.webp" },
+                { nome: "Biquíni Verde Militar", img: "imagens/biquini 9.webp" },
+                { nome: "Biquíni Coral", img: "imagens/biquini 10.webp" },
+                { nome: "Biquíni Azul Marinho", img: "imagens/biquini 11.webp" },
+                { nome: "Biquíni Creme", img: "imagens/biquini 12.webp" },
+                { nome: "Biquíni Vermelho", img: "imagens/biquini 13.webp" },
+                { nome: "Biquíni Floral Rosa", img: "imagens/biquini 14.webp" },
+                { nome: "Biquíni Marrom", img: "imagens/biquini 15.webp" },
+                { nome: "Biquíni Lilás", img: "imagens/biquini 16.webp" },
+                { nome: "Biquíni Floral Azul", img: "imagens/biquini 18.webp" },
+                { nome: "Biquíni olho", img: "imagens/biquini 19.webp" },
+                { nome: "Biquíni Floral Pastel", img: "imagens/biquini 20.webp" },
+            ];
+
+            let html = "";
+
+            produtos.forEach((produto, index) => {
+                let i = index + 1;
+                html += `
+                <div class="card">
+                    <img src="${produto.img}" alt="${produto.nome}">
+                    <h3>${produto.nome}</h3>
+                    <p class="price">R$ 89,90</p>
+
+                    <label><strong>Tamanho:</strong></label>
+                    <select id="tam${i}">
+                        <option>P</option>
+                        <option>M</option>
+                        <option>G</option>
+                        <option>GG</option>
+                    </select>
+
+                    <button class="btn-comprar"
+                        onclick="addCarrinho('${produto.nome}', document.getElementById('tam${i}').value)">
+                        Comprar
+                    </button>
+                </div>
+            `;
+            });
+
+            document.write(html);
+        </script>
+
+    </div>
+
+    <script>
+        let carrinho = [];
+
+        function addCarrinho(item, tamanho) {
+            carrinho.push({ nome: item, tam: tamanho });
+            atualizarCarrinho();
+            atualizarContador();
+        }
+
+        function atualizarContador() {
+            document.getElementById("carrinho-btn").innerText =
+                `Carrinho (${carrinho.length})`;
+        }
+
+        function atualizarCarrinho() {
+            const lista = document.getElementById("lista-carrinho");
+            lista.innerHTML = "";
+
+            carrinho.forEach((item, index) => {
+                let li = document.createElement("li");
+                li.innerHTML = `
+                ${item.nome} (Tam: ${item.tam})
+                <button onclick="removerItem(${index})">X</button>
+            `;
+                lista.appendChild(li);
+            });
+        }
+
+        function removerItem(index) {
+            carrinho.splice(index, 1);
+            atualizarCarrinho();
+            atualizarContador();
+        }
+
+        document.getElementById("carrinho-btn").onclick = () => {
+            const box = document.getElementById("carrinho-box");
+            box.style.display = box.style.display === "none" ? "block" : "none";
+        };
+    </script>
+
+
+    <!-- REDES SOCIAIS -->
+    <div class="social">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+
+    <!-- CONTATO -->
+    <footer id="contato">
+        <p>Email: <a style="color:#ffdd55" href="mailto:brunaproberto@gmail.com">brunaproberto@gmail.com</a></p>
+
+        <h3>Localização da Loja</h3>
+        <iframe
+            src="https://www.google.com.br/maps/place/Matinhos+-+PR/@-25.7762893,-48.5834377,12z/data=!3m1!4b1!4m6!3m5!1s0x94dbedf599045eb7:0xe4ee4b3401ddb775!8m2!3d-25.8167999!4d-48.5383013!16zL20vMGRrZ2hy?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D">
+        </iframe>
+
+        <p>© 2025 Pele & Sol</p>
+    </footer>
+
+</body>
+
+</html>
